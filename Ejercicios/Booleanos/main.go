@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	funciones "github.com/FrancoRutigliano/Booleanos/func"
+	funciones "github.com/FrancoRutigliano/AcademiaGolang/Ejercicios/Booleanos/func"
 )
 
 // TAREA MATI:
