@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	funciones "github.com/FrancoRutigliano/AcademiaGolang/Ejercicios/Booleanos/func"
 )
@@ -21,6 +22,8 @@ var (
 	perroEstado       bool
 )
 
+// ------ Hacer Tolower -------
+// strings.Tolower()
 var (
 	Estado string
 )
@@ -29,40 +32,47 @@ func main() {
 
 	fmt.Print("Estado del Caballero: (si o no) ")
 	fmt.Scan(&Estado)
-
+	Estado = strings.ToLower(Estado)
 	if Estado == "si" {
 		// caballero esta despierto
 		caballeroEstado = true
+		fmt.Println("El caballero esta despierto")
 	} else if Estado == "no" {
 		caballeroEstado = false
+		fmt.Println("El caballero esta dormido")
 	} else {
-		log.Fatal("Estado incorrecto")
+		log.Fatal("Estado incorrecto, intente nuevamente")
 	}
 
 	fmt.Print("Estado del Aquero: (si o no) ")
 	fmt.Scan(&Estado)
+	Estado = strings.ToLower(Estado)
 
 	if Estado == "si" {
 		// arquero esta despierto
 		arqueroEstado = true
+		fmt.Println("El arquero esta despierto")
 	} else if Estado == "no" {
 		arqueroEstado = false
+		fmt.Println("El arquero esta dormido")
 	} else {
-		log.Fatal("Estado incorrecto")
+		log.Fatal("Estado incorrecto, intente nuevamente")
 	}
 
+	fmt.Println("!ES MOMENTO DE TOMAR UNA DECISION!")
 	// del menu
 	var opc int = 0
-	fmt.Print("Selecionar opcion: 1) Ataque rapido | 2) Espiar | 3) Salvar al prisionero \n")
+	fmt.Print("Selecionar una opcion: 1) Ataque rapido | 2) Espiar | 3) Salvar al prisionero \n")
 	fmt.Scan(&opc)
 	switch opc {
 	case 1:
 		funciones.AtaqueRapido(caballeroEstado)
 	case 2:
-		Espiar(caballeroEstado, arqueroEstado)
+		funciones.Espiar(caballeroEstado, arqueroEstado)
 	case 3:
 		fmt.Print("Esta perro presente: (si o no): ")
 		fmt.Scan(&Estado)
+		Estado = strings.ToLower(Estado)
 
 		if Estado == "si" {
 			// caballero esta despierto
@@ -70,11 +80,12 @@ func main() {
 		} else if Estado == "no" {
 			perroEstado = false
 		} else {
-			log.Fatal("Estado incorrecto")
+			log.Fatal("Estado incorrecto, intente nuevamente")
 		}
 
 		fmt.Print("\nEstado del prisionero: (si o no):")
 		fmt.Scan(&Estado)
+		Estado = strings.ToLower(Estado)
 
 		if Estado == "si" {
 			// caballero esta despierto
@@ -82,43 +93,15 @@ func main() {
 		} else if Estado == "no" {
 			priosioneroEstado = false
 		} else {
-			log.Fatal("Estado incorrecto")
+			log.Fatal("Estado incorrecto, intente nuevamente")
 		}
 
-		SalvarPrisionero(caballeroEstado, arqueroEstado, perroEstado, priosioneroEstado)
+		funciones.SalvarPrisionero(caballeroEstado, arqueroEstado, perroEstado, priosioneroEstado)
 
 	default:
-		fmt.Println("Número incorrecto")
+		fmt.Println("Número incorrecto, intente nuevamente")
 	}
 
-}
-
-func Espiar(caballeroEstado, ArqueroEstado bool) {
-	if caballeroEstado || arqueroEstado {
-		fmt.Println("Podemos espiar")
-	} else if !caballeroEstado && !arqueroEstado {
-		fmt.Println("No te conviene espiar, los dos estan dormidos, preferible salvar al princionero")
-	}
-}
-
-func SalvarPrisionero(caballeroEstado, arqueroEstado, perroEstado, prisioneroEstado bool) {
-	// PRIMERO ---> ESTADO DEL PERRO
-	// si el perro esta, para poder rescatar al prisionero, el arquero tiene que estar dormido
-	if perroEstado {
-		if !arqueroEstado && prisioneroEstado {
-			fmt.Println("Salvalooooo")
-		} else if arqueroEstado {
-			fmt.Println("No podes, arquero despierto")
-		} else if !prisioneroEstado {
-			fmt.Println("Prisionero dormido")
-		}
-	} else {
-		if prisioneroEstado && !caballeroEstado && !arqueroEstado {
-			fmt.Println("Salvalooooo")
-		} else {
-			fmt.Println("Se durmieron, volve mañana")
-		}
-	}
 }
 
 // func corroborarEstado(nombre string) bool {
